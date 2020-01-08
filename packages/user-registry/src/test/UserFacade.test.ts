@@ -30,13 +30,11 @@ describe('User Facade', () => {
     const user1PK = '0xd9bc30dc17023fbb68fe3002e0ff9107b241544fd6d60863081c55e383f1b5a3';
     const user1 = web3.eth.accounts.privateKeyToAccount(user1PK).address;
 
-    const user2PK = '0xc4b87d68ea2b91f9d3de3fcb77c299ad962f006ffb8711900cb93d94afec3dc3';
-    const user2 = web3.eth.accounts.privateKeyToAccount(user2PK).address;
-
     const RIGHTS = buildRights([Role.Trader, Role.DeviceManager]);
 
     it('should deploy the contracts', async () => {
-        userLogic = await migrateUserRegistryContracts(web3, privateKeyDeployment);
+        const contract = await migrateUserRegistryContracts('test', accountDeployment);
+        userLogic = new UserLogic(web3, contract.address);
 
         assert.exists(userLogic);
     });

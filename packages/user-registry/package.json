@@ -28,7 +28,7 @@
     "build-and-deploy": "yarn build:ts && yarn deploy-contracts",
     "build-schemas": "node ./scripts/buildSchemas.js",
     "build-schema:UserPropertiesOffChain": "typescript-json-schema --ignoreErrors --required src/blockchain-facade/Users/User.ts IUserOffChainProperties",
-    "clean": "shx rm -rf build schemas db.sqlite dist dist-shakeable",
+    "clean": "shx rm -rf build schemas db.sqlite dist dist-shakeable .openzeppelin/dev-*.json",
     "compile": "truffle compile",
     "deploy-contracts": "truffle migrate",
     "extractABI": "node ./scripts/extractABI.js",
@@ -44,6 +44,8 @@
   "types": "dist/js/src/index.d.ts",
   "dependencies": {
     "@energyweb/utils-general": "4.0.0",
+    "@openzeppelin/cli": "2.6.0",
+    "@openzeppelin/upgrades": "2.6.0",
     "typedarray-to-buffer": "3.1.5",
     "web3": "1.2.4",
     "web3-core": "1.2.4",

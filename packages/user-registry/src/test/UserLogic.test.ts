@@ -22,7 +22,8 @@ describe('UserLogic', () => {
     const accountDeployment = web3.eth.accounts.privateKeyToAccount(privateKeyDeployment).address;
 
     it('should deploy the contracts', async () => {
-        userLogic = await migrateUserRegistryContracts(web3, privateKeyDeployment);
+        const contract = await migrateUserRegistryContracts('test', accountDeployment);
+        userLogic = new UserLogic(web3, contract.address);
 
         assert.exists(userLogic);
     });

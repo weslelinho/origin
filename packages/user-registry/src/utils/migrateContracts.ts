@@ -1,25 +1,31 @@
-import Web3 from 'web3';
-import { deploy } from '@energyweb/utils-general';
-
-import { UserLogic } from '../wrappedContracts/UserLogic';
-import UserLogicJSON from '../../build/contracts/UserLogic.json';
+import { scripts, ConfigManager } from '@openzeppelin/cli';
+import { Contract } from '@openzeppelin/upgrades';
 
 export async function migrateUserRegistryContracts(
-    web3: Web3,
-    deployKey: string
-): Promise<UserLogic> {
-    const privateKeyDeployment = deployKey.startsWith('0x') ? deployKey : `0x${deployKey}`;
+    networkName: string,
+    deployAccount: string
+): Promise<Contract> {
+    const { network, txParams } = await ConfigManager.initNetworkConfiguration({
+        network: networkName,
+        from: deployAccount
+    });
+    const contractName = 'UserLogic';
 
-    const userLogicAddress = (
-        await deploy(web3, UserLogicJSON.bytecode, {
-            privateKey: privateKeyDeployment
-        })
-    ).contractAddress;
-
-    const userLogic = new UserLogic(web3, userLogicAddress);
-    await userLogic.initialize({
-        privateKey: privateKeyDeployment
+    scripts.add({
+        contractsData: [
+            {
+                name: contractName,
+                alias: contractName
+            }
+        ]
     });
 
-    return userLogic;
+    await scripts.push({ network, txParams });
+    return scripts.create({
+        contractAlias: contractName,
+        methodName: 'initialize',
+        methodArgs: [],
+        network,
+        txParams
+    });
 }

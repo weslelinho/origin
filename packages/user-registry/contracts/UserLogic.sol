@@ -148,4 +148,10 @@ contract UserLogic is Initializable, RoleManagement, IRoles, IUserLogic {
 
         emit UserUpdated(_user);
     }
+
+    /// @notice Returns the version of the contract
+	/// @return version of the contract
+    function version() public pure returns (string memory) {
+        return "v0.1";
+    }
 }

@@ -46,4 +46,8 @@ contract IUserLogic {
     /// @param _propertiesDocumentHash document-hash with all the properties of the user
 	/// @param _documentDBURL url-address of the user
     function updateUser(address _user, string calldata _propertiesDocumentHash, string calldata _documentDBURL) external;
+
+    /// @notice Returns the version of the contract
+	/// @return version of the contract
+    function version() public pure returns (string memory);
 }

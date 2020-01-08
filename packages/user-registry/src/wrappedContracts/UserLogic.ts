@@ -92,4 +92,8 @@ export class UserLogic extends GeneralFunctions {
     async doesUserExist(_user: string, txParams?: ISpecialTx) {
         return this.web3Contract.methods.doesUserExist(_user).call(txParams);
     }
+
+    async version(txParams?: ISpecialTx) {
+        return this.web3Contract.methods.version().call(txParams);
+    }
 }
